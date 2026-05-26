@@ -2,7 +2,7 @@
 
 A self-contained HTML investor deck on DeweyLearn's higher ed assessment and evaluation platform. 15 slides, scroll to read.
 
-**View it:** _(GitHub Pages URL goes here once deployed)_
+**View it:** [luyenchou1.github.io/dl-he-deck](https://luyenchou1.github.io/dl-he-deck/)
 
 ## What's in here
 

@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeweyLearn · Assessing the Doing of Learning · Higher Education</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@500;600;700;800&family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo:        #1F22B0;
+    --indigo-deep:   #15188A;
+    --indigo-darker: #0E1166;
+    --indigo-soft:   #EEEFF8;
+    --indigo-tint:   #F4F5FB;
+    --indigo-line:   #DCDFEF;
+    --indigo-text:   #C8CDF5;
+    --gold:          #F5B13C;
+    --navy:          #0F1340;
+    --charcoal:      #1F2937;
+    --stone:         #6B7280;
+    --stone-soft:    #9CA3AF;
+    --hairline:      #E5E7EB;
+    --light:         #F8F9FC;
+    --white:         #FFFFFF;
+    --green:         #16A34A;
+    --green-soft:    #DCFCE7;
+    --red:           #DC2626;
+    --red-soft:      #FEE2E2;
+    --yellow:        #CA8A04;
+    --yellow-soft:   #FEF3C7;
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    color: var(--navy);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    font-size: 17px;
+    padding-bottom: 80px; /* space for fixed nav */
+  }
+
+  /* ===== Layout primitives ===== */
+  .slide-wrap {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .slide-wrap.dark { background: var(--indigo-deep); }
+  .slide-wrap.hero-wrap { background: linear-gradient(135deg, #1F22B0 0%, #15188A 50%, #0E1166 100%); padding: 0; }
+
+  .section {
+    padding: 5rem 3rem;
+    max-width: 1320px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .section--narrow { max-width: 1180px; }
+  .section--dark { color: var(--white); }
+  .section--full { max-width: 100%; padding-left: 0; padding-right: 0; }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin: 0 0 1rem 0;
+  }
+  .section--dark .eyebrow { color: var(--gold); }
+
+  h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    color: var(--indigo);
+    margin: 0;
+    letter-spacing: -0.025em;
+  }
+  h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; }
+  h2 { font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1.1; }
+  h3 { font-size: 1.5rem; line-height: 1.25; }
+  .section--dark h1, .section--dark h2 { color: var(--white); }
+
+  .lede {
+    font-size: 1.25rem;
+    color: var(--stone);
+    max-width: 60ch;
+    margin: 1.5rem 0 0 0;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+  .section--dark .lede { color: var(--indigo-text); }
+
+  .footer-strip {
+    border-top: 1px solid var(--hairline);
+    margin-top: 6rem;
+    padding-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--stone);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .section--dark .footer-strip { border-color: rgba(255,255,255,0.15); color: var(--indigo-text); }
+
+  /* ===== HERO ===== */
+  .hero {
+    color: var(--white);
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 3rem 3rem 3rem;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -200px; right: -300px;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(245,177,60,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .hero-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-logo .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #6F8DFF;
+    flex-shrink: 0;
+    margin-top: 18px;
+    box-shadow: 0 0 0 4px rgba(111,141,255,0.25);
+  }
+  .hero-logo .wordmark {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 2.4rem;
+    letter-spacing: -0.04em;
+    color: var(--white);
+  }
+  .hero-badge {
+    width: 130px;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  .hero-body {
+    margin-top: auto;
+    padding-bottom: 3rem;
+    max-width: 1100px;
+  }
+  .hero-eyebrow {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-headline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: var(--white);
+    margin: 0;
+  }
+  .hero-headline .accent {
+    background: linear-gradient(180deg, transparent 60%, rgba(245,177,60,0.45) 60%, rgba(245,177,60,0.45) 88%, transparent 88%);
+    padding: 0 0.1em;
+  }
+  .hero-sub {
+    margin-top: 2.5rem;
+    font-size: 1.35rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+
+  .hero-meta {
+    margin-top: 4rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: baseline;
+    color: var(--indigo-text);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 1.5rem;
+  }
+  .hero-meta strong { color: var(--white); font-weight: 600; }
+
+  /* ===== GSV recognition ===== */
+  .gsv-wrap {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3.5rem;
+  }
+  .gsv-badge-large {
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 30px 70px rgba(31,34,176,0.20);
+  }
+  .gsv-thanks .grateful {
+    color: var(--indigo);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .gsv-thanks h3.title {
+    color: var(--navy);
+    font-size: 2.25rem;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  .gsv-thanks p {
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    line-height: 1.6;
+    margin: 0 0 1.25rem 0;
+  }
+  .gsv-thanks .partner { color: var(--indigo); font-weight: 700; }
+  .gsv-thanks .closer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--indigo-soft);
+    color: var(--indigo);
+    font-style: italic;
+    font-size: 1.05rem;
+  }
+
+  /* ===== Validation stats ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+  .stat-card {
+    background: var(--indigo-tint);
+    border-radius: 20px;
+    padding: 2rem;
+    border-top: 4px solid var(--indigo);
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+  }
+  .stat-card h4 {
+    margin: 0 0 1.5rem 0;
+    color: var(--indigo);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .stat-row {
+    margin-bottom: 1.25rem;
+  }
+  .stat-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .stat-lbl {
+    font-size: 0.95rem;
+    color: var(--navy);
+    margin-top: 0.4rem;
+    line-height: 1.4;
+  }
+  .stat-insight {
+    margin-top: auto;
+    color: var(--indigo);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--indigo-line);
+  }
+  .calibration-note {
+    margin-top: 2rem;
+    background: var(--indigo-tint);
+    padding: 1.25rem 1.75rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    border-left: 4px solid var(--indigo);
+  }
+  .calibration-note strong { color: var(--indigo); }
+
+  /* ===== Faculty Command Center (alert cards) ===== */
+  .command-frame {
+    background: var(--light);
+    border-radius: 28px;
+    padding: 3rem;
+    margin-top: 3rem;
+    border: 1px solid var(--hairline);
+    box-shadow: 0 30px 80px rgba(15, 19, 64, 0.06);
+  }
+  .command-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .command-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 3px solid var(--indigo);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .command-icon svg { color: var(--indigo); }
+  .command-header h3 {
+    color: var(--navy);
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+  }
+  .command-header p {
+    margin: 0;
+    color: var(--stone);
+    font-size: 1rem;
+  }
+  .command-subtitle {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--charcoal);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .command-intro {
+    color: var(--stone);
+    margin: 0 0 1.5rem 0;
+    font-size: 0.95rem;
+  }
+  .alert-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .alert {
+    background: var(--white);
+    border-left: 4px solid;
+    border-radius: 10px;
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .alert-mark {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    color: var(--white);
+    font-size: 0.95rem;
+  }
+  .alert-body { flex: 1; }
+  .alert-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .alert-text {
+    color: var(--charcoal);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .alert--green       { border-left-color: var(--green); background: #F0FDF4; }
+  .alert--green .alert-mark  { background: var(--green); }
+  .alert--green .alert-label { color: var(--green); }
+  .alert--yellow      { border-left-color: var(--yellow); background: #FFFBEB; }
+  .alert--yellow .alert-mark { background: var(--yellow); }
+  .alert--yellow .alert-label { color: var(--yellow); }
+  .alert--red         { border-left-color: var(--red); background: #FEF2F2; }
+  .alert--red .alert-mark    { background: var(--red); }
+  .alert--red .alert-label   { color: var(--red); }
+
+  .command-footnote {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--stone);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  /* ===== Live Session Command Center (3 phases) ===== */
+  .phase {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--hairline);
+  }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.65rem;
+    flex-wrap: wrap;
+  }
+  .phase-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.32rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .phase-pill--pre  { background: #DCFCE7; color: #15803D; }
+  .phase-pill--live { background: #FEE2E2; color: #B91C1C; }
+  .phase-pill--post { background: #EDE9FE; color: #6D28D9; }
+  .phase-pill .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #DC2626;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.85); }
+  }
+  .phase-name {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+  }
+  .phase-sub {
+    font-size: 0.88rem;
+    color: var(--stone);
+    margin: 0 0 1rem 0;
+    font-style: italic;
+  }
+  .phase-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .phase-card {
+    background: var(--light);
+    border-left: 4px solid;
+    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--charcoal);
+  }
+  .phase-card--green  { border-left-color: var(--green); }
+  .phase-card--amber  { border-left-color: var(--yellow); }
+  .phase-card--purple { border-left-color: #6D28D9; }
+  .phase-card--red    { border-left-color: var(--red); }
+  .phase-card strong  { color: var(--navy); font-weight: 700; }
+  .phase-card .hint   {
+    color: var(--stone);
+    font-style: italic;
+    font-size: 0.88rem;
+    display: block;
+    margin-top: 0.35rem;
+  }
+
+  .whispers {
+    display: flex;
+    flex-direction: column;
+  }
+  .whisper {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .whisper:last-child { border-bottom: 0; }
+  .whisper-time {
+    font-size: 0.78rem;
+    color: var(--stone-soft);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    padding-top: 0.1rem;
+  }
+  .whisper-body {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--charcoal);
+  }
+  .whisper--instructor .whisper-body .speaker {
+    color: var(--green);
+    font-weight: 700;
+    margin-right: 0.3rem;
+  }
+  .whisper--prompt .whisper-body {
+    border-left: 3px solid;
+    padding-left: 0.85rem;
+    font-style: italic;
+  }
+  .whisper--prompt-green .whisper-body { border-left-color: var(--green); }
+  .whisper--prompt-amber .whisper-body { border-left-color: var(--yellow); }
+  .whisper--prompt .speaker {
+    color: var(--stone);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    display: block;
+    margin-bottom: 0.25rem;
+    font-style: normal;
+  }
+  .whisper--prompt-green .speaker { color: #15803D; }
+  .whisper--prompt-amber .speaker { color: #92400E; }
+
+  /* ===== Command Center: 5-card dashboard ===== */
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0 1rem 0;
+  }
+  .cmd-card {
+    background: var(--white);
+    border: 2px solid var(--indigo-soft);
+    border-radius: 14px;
+    padding: 1.4rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .cmd-card .icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.85rem;
+    line-height: 1;
+  }
+  .cmd-card h4 {
+    color: var(--navy);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.45rem 0;
+    letter-spacing: -0.01em;
+  }
+  .cmd-card-desc {
+    font-size: 0.86rem;
+    color: var(--charcoal);
+    line-height: 1.45;
+    margin: 0 0 1rem 0;
+  }
+  .cmd-card-stat {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .cmd-card-stat--warn { color: var(--yellow); }
+  .cmd-card-stat-lbl {
+    font-size: 0.82rem;
+    color: var(--stone);
+    margin-top: 0.35rem;
+  }
+  .cmd-rows {
+    margin-top: 1rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 0.4rem;
+  }
+  .cmd-rows.no-border {
+    border-top: 0;
+    padding-top: 0.85rem;
+  }
+  .cmd-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .cmd-row:last-child { border-bottom: 0; }
+  .cmd-row-label { color: var(--charcoal); }
+  .cmd-row-value { color: var(--navy); font-weight: 700; }
+
+  .pill {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .pill--green  { background: #DCFCE7; color: #15803D; }
+  .pill--yellow { background: #FEF3C7; color: #92400E; }
+  .pill--red    { background: #FEE2E2; color: #B91C1C; }
+
+  .cmd-note {
+    margin-top: 1rem;
+    background: var(--indigo-tint);
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+
+  /* Student rows (in Risk card) */
+  .stud-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    background: var(--light);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  .stud-row:last-child { margin-bottom: 0; }
+  .stud-avatar { font-size: 1.2rem; }
+  .stud-name { font-weight: 700; color: var(--navy); font-size: 0.88rem; }
+  .stud-detail { color: var(--charcoal); font-size: 0.82rem; line-height: 1.35; margin-top: 0.15rem; }
+
+  /* Outreach channel options */
+  .channel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: center;
+    background: var(--light);
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.5rem;
+    border: 2px solid transparent;
+  }
+  .channel--selected {
+    background: #DCFCE7;
+    border-color: var(--green);
+  }
+  .channel-icon { font-size: 1.2rem; }
+  .channel-name { font-weight: 700; color: var(--navy); font-size: 0.9rem; }
+  .channel-desc { color: var(--stone); font-size: 0.78rem; margin-top: 0.15rem; line-height: 1.35; }
+  .channel-prompt {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+
+  /* Predictive Risk Scoring Live View */
+  .risk-live {
+    background: var(--light);
+    border-radius: 14px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 1rem;
+    border: 1px solid var(--hairline);
+  }
+  .risk-live h4 {
+    color: var(--navy);
+    margin: 0 0 1.1rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .risk-bar {
+    display: flex;
+    height: 12px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.7rem;
+  }
+  .risk-bar > div { height: 100%; }
+  .risk-legend {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    font-weight: 600;
+  }
+  .risk-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .risk-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+  }
+  .risk-students {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  .risk-stud {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.7rem;
+    border-left: 3px solid;
+  }
+  .risk-stud--green  { border-left-color: var(--green); }
+  .risk-stud--yellow { border-left-color: var(--yellow); background: #FFFBEB; }
+  .risk-stud--red    { border-left-color: var(--red); background: #FEF2F2; }
+  .risk-stud-name { font-weight: 700; color: var(--navy); font-size: 0.9rem; }
+  .risk-stud-detail { color: var(--stone); font-size: 0.76rem; line-height: 1.3; margin-top: 0.15rem; }
+  .risk-stud-score {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .risk-stud--green  .risk-stud-score { color: var(--green); }
+  .risk-stud--yellow .risk-stud-score { color: var(--yellow); }
+  .risk-stud--red    .risk-stud-score { color: var(--red); }
+
+  @media (max-width: 1100px) {
+    .cmd-grid { grid-template-columns: repeat(2, 1fr); }
+    .risk-students { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .cmd-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Then & Now trajectory ===== */
+  .traj-headline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .traj-timeline {
+    position: relative;
+    margin: 4rem 0 3.5rem 0;
+    padding: 0 1rem;
+  }
+  .traj-track {
+    position: absolute;
+    top: 13px;
+    left: 6%; right: 6%;
+    height: 3px;
+    background: var(--hairline);
+    z-index: 0;
+    border-radius: 2px;
+  }
+  .traj-track-progress {
+    position: absolute;
+    top: 13px;
+    left: 6%;
+    height: 3px;
+    background: var(--green);
+    z-index: 1;
+    border-radius: 2px;
+  }
+  .traj-stops {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    position: relative;
+    z-index: 2;
+  }
+  .traj-stop {
+    text-align: center;
+    padding: 0 0.4rem;
+  }
+  .traj-stop-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 4px solid var(--stone-soft);
+    margin: 0 auto 0.85rem auto;
+    box-sizing: border-box;
+  }
+  .traj-stop--missed .traj-stop-dot {
+    border-color: var(--red);
+    background: var(--white);
+  }
+  .traj-stop--past .traj-stop-dot {
+    border-color: var(--green);
+    background: var(--green);
+  }
+  .traj-stop--current .traj-stop-dot {
+    width: 30px; height: 30px;
+    border-color: var(--green);
+    background: var(--green);
+    box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.18);
+    margin-top: -4px;
+  }
+  .traj-stop-date {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--charcoal);
+    margin-bottom: 0.25rem;
+  }
+  .traj-stop--missed .traj-stop-date { color: var(--red); }
+  .traj-stop--past .traj-stop-date { color: var(--green); }
+  .traj-stop--current .traj-stop-date { color: var(--green); }
+  .traj-stop-name {
+    font-size: 0.88rem;
+    color: var(--charcoal);
+    line-height: 1.3;
+  }
+  .traj-stop--past .traj-stop-name {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .traj-stop--current .traj-stop-name {
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .traj-stop-tag {
+    font-size: 0.78rem;
+    margin-top: 0.45rem;
+    font-style: italic;
+    line-height: 1.3;
+  }
+  .traj-stop--missed .traj-stop-tag { color: var(--red); font-weight: 600; }
+  .traj-stop--past .traj-stop-tag { color: var(--red); font-weight: 600; }
+  .traj-stop--current .traj-stop-tag { color: var(--green); font-weight: 700; font-style: normal; }
+
+  .traj-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  .traj-box {
+    border-radius: 16px;
+    padding: 1.85rem 2rem 1.75rem 2rem;
+    position: relative;
+  }
+  .traj-box--original {
+    background: var(--light);
+    border: 1px solid var(--hairline);
+  }
+  .traj-box--accelerated {
+    background: #F0FDF4;
+    border: 2px solid var(--green);
+  }
+  .traj-tag {
+    position: absolute;
+    top: 1.35rem;
+    right: 1.5rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+  }
+  .traj-tag--original { background: #374151; color: var(--white); }
+  .traj-tag--accelerated { background: var(--green); color: var(--white); }
+  .traj-box h4 {
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 1.4rem 0;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    padding-right: 8rem;
+  }
+  .traj-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .traj-box li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.95rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--charcoal);
+  }
+  .traj-box li:last-child { margin-bottom: 0; }
+  .traj-box li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.55rem;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .traj-box--original li::before { background: #374151; opacity: 0.55; }
+  .traj-box--accelerated li::before { background: var(--green); }
+  .traj-box--accelerated li strong { color: var(--green); font-weight: 800; }
+
+  @media (max-width: 1024px) {
+    .traj-stops { grid-template-columns: repeat(4, 1fr); gap: 1.5rem 0; }
+    .traj-track, .traj-track-progress { display: none; }
+    .traj-compare { grid-template-columns: 1fr; }
+    .traj-box h4 { padding-right: 7rem; }
+  }
+  @media (max-width: 600px) {
+    .traj-stops { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ===== Friction progression ===== */
+  .friction-flow {
+    margin-top: 4rem;
+    position: relative;
+  }
+  .friction-bracket {
+    margin-bottom: 1rem;
+    display: flex;
+  }
+  .friction-bracket .label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    color: var(--white);
+  }
+  .friction-bracket--top { width: 50%; }
+  .friction-bracket--top .label {
+    background: var(--indigo);
+    width: 100%;
+    text-align: center;
+  }
+  .friction-bracket--bottom {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    justify-content: flex-end;
+  }
+  .friction-bracket--bottom .label {
+    background: var(--stone);
+    width: 25%;
+    text-align: center;
+  }
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    align-items: stretch;
+    position: relative;
+  }
+  .stage {
+    border-radius: 14px;
+    padding: 1.6rem;
+    min-height: 200px;
+    position: relative;
+  }
+  .stage::after {
+    content: "→";
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: var(--stone);
+    z-index: 2;
+  }
+  .stage:last-child::after { display: none; }
+  .stage .num {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+  .stage .name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  .stage .desc {
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .stage--solid {
+    background: var(--indigo);
+    color: var(--white);
+  }
+  .stage--solid .num { color: rgba(255,255,255,0.65); }
+  .stage--solid .desc { color: var(--indigo-text); }
+  .stage--soft {
+    background: var(--indigo-soft);
+    color: var(--indigo);
+  }
+  .stage--soft .num { color: var(--indigo); }
+  .stage--soft .desc { color: var(--charcoal); }
+  .stage--gray {
+    background: #F3F4F6;
+    color: var(--stone);
+    border: 1px solid var(--hairline);
+  }
+  .stage--gray .num { color: var(--stone-soft); }
+  .stage--gray .name { color: var(--stone); }
+  .stage--gray .desc { color: var(--stone); }
+
+  .pull-quote {
+    margin-top: 3rem;
+    background: var(--indigo);
+    color: var(--white);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+  .pull-quote .attr {
+    margin-top: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 0.85rem;
+    color: var(--indigo-text);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ===== Solution video + layers ===== */
+  .solution-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+  .video-frame {
+    background: var(--indigo);
+    border-radius: 20px;
+    padding: 1rem;
+    position: relative;
+    box-shadow: 0 30px 70px rgba(31,34,176,0.20);
+  }
+  .video-frame video {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    aspect-ratio: 16/9;
+    background: #000;
+  }
+  .video-caption {
+    margin-top: 1.25rem;
+    color: var(--indigo);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .video-desc {
+    margin-top: 0.5rem;
+    color: var(--stone);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+  .layers { display: flex; flex-direction: column; gap: 0; }
+  .layer {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .layer:last-child { border-bottom: 0; }
+  .layer-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    color: var(--indigo);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .layer h4 {
+    margin: 0 0 0.4rem 0;
+    color: var(--navy);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .layer p {
+    margin: 0;
+    color: var(--charcoal);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ===== Voice mentor / audio card (legacy component) ===== */
+  .auguste-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+  .mini-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .mini-kpi {
+    background: var(--indigo-tint);
+    border-radius: 12px;
+    padding: 1.25rem;
+    border-top: 3px solid var(--indigo);
+  }
+  .mini-kpi-num {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .mini-kpi-lbl {
+    margin-top: 0.55rem;
+    font-size: 0.8rem;
+    color: var(--navy);
+    line-height: 1.4;
+  }
+  .auguste-prose p {
+    margin: 0 0 1rem 0;
+    color: var(--charcoal);
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
+  .auguste-prose .strong {
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .auguste-prose .quotes {
+    margin-top: 1.5rem;
+    color: var(--stone);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .audio-card {
+    background: var(--indigo);
+    border-radius: 20px;
+    padding: 1.5rem;
+    color: var(--white);
+    box-shadow: 0 30px 70px rgba(31,34,176,0.20);
+  }
+  .audio-inner {
+    background: #0E3C32;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .audio-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .audio-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .waveform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin: 1.5rem 0 1rem 0;
+    height: 64px;
+  }
+  .waveform .bar {
+    width: 4px;
+    background: #B85042;
+    border-radius: 2px;
+  }
+  audio { width: 100%; margin-top: 1rem; }
+  .audio-caption {
+    margin-top: 1.25rem;
+    color: var(--indigo);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .audio-desc {
+    margin-top: 0.5rem;
+    color: var(--stone);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+  .auguste-quote {
+    margin-top: 3rem;
+    background: var(--indigo);
+    color: var(--white);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    font-style: italic;
+    font-size: 1.05rem;
+  }
+
+  /* ===== Results grid ===== */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+  .result {
+    background: var(--indigo-tint);
+    border-radius: 18px;
+    padding: 2rem;
+    border-left: 4px solid var(--indigo);
+    transition: transform 0.2s ease;
+  }
+  .result:hover { transform: translateY(-2px); }
+  .result-num {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+  .result-lbl {
+    font-size: 1rem;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .result-sub {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--stone);
+    font-style: italic;
+  }
+  .results-quote {
+    margin-top: 2.5rem;
+    background: var(--indigo);
+    color: var(--white);
+    padding: 1.85rem 2.5rem;
+    border-radius: 16px;
+  }
+  .results-quote p {
+    margin: 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+  .results-quote .attr {
+    margin-top: 0.85rem;
+    font-style: normal;
+    font-size: 0.85rem;
+    color: var(--indigo-text);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ===== What's Next ===== */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 92px;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: var(--indigo-text);
+    opacity: 0.4;
+    z-index: 0;
+  }
+  .stop { text-align: center; position: relative; z-index: 1; }
+  .stop-date {
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .stop-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .stop-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--white);
+    margin: 0 auto 1rem;
+    border: 3px solid var(--indigo-deep);
+    box-shadow: 0 0 0 4px var(--indigo-deep);
+  }
+  .stop--target .stop-dot { background: var(--gold); }
+  .stop-desc {
+    color: var(--indigo-text);
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .next-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+  .next-col {
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    border-top: 3px solid var(--gold);
+  }
+  .next-col.beyond { border-top-color: #6F8DFF; }
+  .next-col h4 {
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+  }
+  .next-col.beyond h4 { color: #6F8DFF; }
+  .next-col li {
+    color: var(--white);
+    margin-bottom: 0.85rem;
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+  .next-col ul { padding: 0; margin: 0; list-style: none; }
+  .next-col .closer {
+    color: var(--gold);
+    font-style: italic;
+    font-size: 1rem;
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  /* ===== Logo for content sections (small) ===== */
+  .small-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    color: var(--indigo);
+    font-size: 1.05rem;
+    letter-spacing: -0.03em;
+  }
+  .small-logo .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #6F8DFF;
+    margin-top: 8px;
+    box-shadow: 0 0 0 2px rgba(111,141,255,0.3);
+  }
+
+  /* ===== Section nav (top sticky) ===== */
+  .section-tag {
+    display: inline-block;
+    color: var(--stone);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  /* ===== Fixed navigation ===== */
+  .nav-bar {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 0.5rem 0.5rem 0.5rem 0.85rem;
+    box-shadow: 0 12px 40px rgba(15,19,64,0.12), 0 2px 8px rgba(15,19,64,0.06);
+    z-index: 100;
+    user-select: none;
+  }
+  .nav-counter {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--indigo);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    padding: 0 0.6rem;
+    min-width: 70px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .nav-counter .total { color: var(--stone); font-weight: 500; }
+  .nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: none;
+    background: var(--indigo);
+    color: var(--white);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, transform 0.15s ease;
+    font-family: inherit;
+  }
+  .nav-btn:hover { background: var(--indigo-deep); transform: scale(1.05); }
+  .nav-btn:active { transform: scale(0.96); }
+  .nav-btn[disabled] {
+    background: var(--hairline);
+    color: var(--stone-soft);
+    cursor: not-allowed;
+    transform: none;
+  }
+  .nav-btn svg { width: 18px; height: 18px; }
+  .nav-btn--text {
+    width: auto;
+    padding: 0 1.1rem;
+    height: 38px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    gap: 0.4rem;
+    letter-spacing: 0.01em;
+  }
+  .nav-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--indigo);
+    width: 0%;
+    z-index: 100;
+    transition: width 0.3s ease;
+  }
+  .nav-section-name {
+    font-size: 0.78rem;
+    color: var(--stone);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0 0.5rem 0 0.25rem;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 600px) {
+    .nav-section-name { display: none; }
+  }
+
+  @media (max-width: 1024px) {
+    .stats-grid, .results-grid { grid-template-columns: 1fr; }
+    .gsv-wrap, .solution-grid, .auguste-grid, .next-cols { grid-template-columns: 1fr; }
+    .stages { grid-template-columns: 1fr 1fr; }
+    .stage::after { display: none; }
+    .timeline { grid-template-columns: 1fr 1fr; }
+    .timeline::before { display: none; }
+    .friction-bracket--top, .friction-bracket--bottom .label { width: 100%; }
+  }
+
+  /* ===== Higher-Ed additions ===== */
+
+  /* Domain chip (use-case header) */
+  .domain-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--indigo-soft);
+    color: var(--indigo);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+  }
+  .domain-chip .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* Two-column use-case layout */
+  .uc-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 3rem;
+    margin-top: 2.75rem;
+    align-items: start;
+  }
+  .uc-prose p {
+    margin: 0 0 1.1rem 0;
+    color: var(--charcoal);
+    font-size: 1.05rem;
+    line-height: 1.62;
+  }
+  .uc-prose .strong { color: var(--navy); font-weight: 700; }
+  .uc-prose .accent-text { color: var(--indigo); font-weight: 700; }
+
+  /* Panel that holds steps / KPIs on the right of a use case */
+  .uc-panel {
+    background: var(--indigo-tint);
+    border-radius: 20px;
+    padding: 2rem 2.1rem;
+    border-top: 4px solid var(--indigo);
+  }
+  .uc-panel--dark {
+    background: var(--indigo-deep);
+    border-top-color: var(--gold);
+    color: var(--white);
+  }
+  .uc-panel h4 {
+    margin: 0 0 1.25rem 0;
+    color: var(--indigo);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .uc-panel--dark h4 { color: var(--gold); }
+
+  /* Numbered step list reused inside panels */
+  .uc-steps { display: flex; flex-direction: column; gap: 1.1rem; }
+  .uc-step { display: grid; grid-template-columns: 40px 1fr; gap: 1rem; align-items: start; }
+  .uc-step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .uc-panel--dark .uc-step-num { background: var(--gold); color: var(--navy); }
+  .uc-step h5 { margin: 0 0 0.2rem 0; color: var(--navy); font-size: 1rem; font-weight: 700; }
+  .uc-panel--dark .uc-step h5 { color: var(--white); }
+  .uc-step p { margin: 0; color: var(--charcoal); font-size: 0.92rem; line-height: 1.5; }
+  .uc-panel--dark .uc-step p { color: var(--indigo-text); }
+
+  /* Outcome stat row inside use-case slides */
+  .uc-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.25rem;
+  }
+  .uc-stat {
+    background: var(--light);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    border-left: 4px solid var(--indigo);
+  }
+  .uc-stat-num {
+    font-size: 2rem; font-weight: 800; color: var(--indigo);
+    line-height: 1; letter-spacing: -0.025em;
+  }
+  .uc-stat-lbl { margin-top: 0.5rem; font-size: 0.88rem; color: var(--navy); line-height: 1.4; }
+
+  /* Privacy / governance note */
+  .gov-note {
+    margin-top: 2rem;
+    background: var(--indigo-tint);
+    border-left: 4px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.1rem 1.5rem;
+    font-size: 0.92rem;
+    color: var(--charcoal);
+    line-height: 1.55;
+  }
+  .gov-note strong { color: var(--indigo); }
+
+  /* AI interview transcript */
+  .transcript { display: flex; flex-direction: column; gap: 0.85rem; }
+  .t-msg { max-width: 88%; }
+  .t-msg .who {
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 0.3rem;
+  }
+  .t-msg .bubble {
+    border-radius: 14px; padding: 0.85rem 1.1rem;
+    font-size: 0.92rem; line-height: 1.5;
+  }
+  .t-bot { align-self: flex-start; }
+  .t-bot .who { color: var(--indigo); }
+  .t-bot .bubble { background: var(--indigo); color: var(--white); border-bottom-left-radius: 4px; }
+  .t-student { align-self: flex-end; text-align: right; }
+  .t-student .who { color: var(--stone); }
+  .t-student .bubble { background: var(--white); color: var(--charcoal); border: 1px solid var(--hairline); border-bottom-right-radius: 4px; text-align: left; }
+
+  /* Multi-modal capture band */
+  .modal-band {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 2.75rem;
+  }
+  .modal-card {
+    background: var(--white);
+    border: 2px solid var(--indigo-soft);
+    border-radius: 16px;
+    padding: 1.6rem 1.5rem;
+  }
+  .modal-card .icon { font-size: 1.7rem; line-height: 1; margin-bottom: 0.75rem; }
+  .modal-card h4 { margin: 0 0 0.4rem 0; color: var(--navy); font-size: 1.05rem; font-weight: 700; }
+  .modal-card p { margin: 0; color: var(--charcoal); font-size: 0.88rem; line-height: 1.45; }
+
+  /* "Expert in the room" principle strip */
+  .principle-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .principle {
+    background: var(--indigo-tint);
+    border-radius: 14px;
+    padding: 1.5rem 1.6rem;
+    border-top: 3px solid var(--indigo);
+  }
+  .principle h4 { margin: 0 0 0.5rem 0; color: var(--indigo); font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
+  .principle p { margin: 0; color: var(--charcoal); font-size: 0.92rem; line-height: 1.5; }
+
+  /* Throughline domain grid */
+  .domain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.75rem;
+  }
+  .domain-tile {
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    padding: 1.5rem 1.6rem;
+    border-left: 4px solid var(--indigo);
+  }
+  .domain-tile .tile-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .domain-tile h4 { margin: 0 0 0.35rem 0; color: var(--navy); font-size: 1.05rem; font-weight: 700; }
+  .domain-tile p { margin: 0; color: var(--stone); font-size: 0.86rem; line-height: 1.45; }
+
+  /* Closing CTA */
+  .cta-box {
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px;
+    padding: 2.5rem 2.75rem;
+  }
+  .cta-box h3 { color: var(--white); font-size: 1.6rem; margin: 0 0 0.75rem 0; }
+  .cta-box p { color: var(--indigo-text); font-size: 1.1rem; line-height: 1.55; margin: 0 0 1.5rem 0; max-width: 60ch; }
+  .cta-contact { display: flex; gap: 2.5rem; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 1.5rem; }
+  .cta-contact .label { color: var(--gold); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .cta-contact .value { color: var(--white); font-size: 1rem; font-weight: 600; }
+
+  @media (max-width: 1024px) {
+    .uc-grid { grid-template-columns: 1fr; }
+    .uc-stats, .modal-band, .principle-strip, .domain-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .uc-stats, .modal-band, .principle-strip, .domain-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-progress" id="navProgress"></div>
+
+<!-- ============================================================
+     SLIDE 1 — HERO / COVER
+============================================================ -->
+<div class="slide-wrap hero-wrap" id="s1" data-name="Cover">
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-logo">
+      <div class="dot"></div>
+      <div class="wordmark">DeweyLearn</div>
+    </div>
+    <img class="hero-badge" src="gsv_cup_badge.png" alt="GSV Cup 50 — DeweyLearn named the world's most innovative digital learning company">
+  </div>
+
+  <div class="hero-body">
+    <div class="hero-eyebrow">Multi-Modal Assessment Infrastructure</div>
+    <h1 class="hero-headline">
+      Assessing the<br>
+      <span class="accent">doing</span> of learning.
+    </h1>
+    <p class="hero-sub">Multi-modal, multi-sensory evaluation at scale for higher and technical education. DeweyLearn is the expert in the room; faculty keep the judgment.</p>
+    <div class="hero-meta">
+      <span><strong>For Higher Education Partners</strong></span>
+      <span>Multi-Modal Assessment Infrastructure</span>
+      <span>2026</span>
+    </div>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 3 — THE IDEA: ASSESSMENT MISSES THE DOING
+============================================================ -->
+<div class="slide-wrap" id="s2" data-name="The Idea">
+<section class="section">
+  <p class="eyebrow">The Idea</p>
+  <h2>Sensory learning never scaled — it needed an expert in every room at once.</h2>
+  <div class="uc-grid">
+    <div class="uc-prose">
+      <p class="lede" style="margin-top:0;">Assessing performance means watching technique, reasoning, sequence, and safety at the same time — live, for every learner. One expert can only be in one room, so it stayed rare and expensive.</p>
+      <p>The bottleneck was never the rubric — it was the expert. Evaluation needs a trained eye holding several dimensions at once, per student. That doesn't scale by adding headcount.</p>
+      <p class="accent-text"><span class="strong">DeweyLearn is that expert — in every room at once,</span> holding the same standard on every learner, every time.</p>
+    </div>
+    <div class="uc-panel">
+      <h4>What the expert tracks — all at once</h4>
+      <div class="uc-steps">
+        <div class="uc-step"><div class="uc-step-num">👁️</div><div><h5>Technique &amp; execution</h5><p>Is the skill performed correctly and cleanly?</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">🧠</div><div><h5>Reasoning in the moment</h5><p>Why this choice, under real conditions?</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">⏱️</div><div><h5>Sequence &amp; timing</h5><p>Right steps, right order, right pace.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">🛟</div><div><h5>Safety &amp; recovery</h5><p>Catching and correcting errors live.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>The Idea · 02</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 4 — THE PLATFORM (CORE TECHNOLOGY)
+============================================================ -->
+<div class="slide-wrap" id="s3" data-name="The Platform">
+<section class="section">
+  <p class="eyebrow">The Platform</p>
+  <h2>Multi-modal, multi-sensory evaluation at scale.</h2>
+  <p class="lede">Text, images, long-form video, voice, and wearable data — captured and scored against your rubric. The expert in the room; faculty keep the judgment.</p>
+
+  <div class="modal-band">
+    <div class="modal-card">
+      <div class="icon">📝</div>
+      <h4>Text &amp; Documents</h4>
+      <p>Written work scored to your rubric, with referenced feedback.</p>
+    </div>
+    <div class="modal-card">
+      <div class="icon">🖼️</div>
+      <h4>Images</h4>
+      <p>Plating, lab results, technique — assessed for correctness.</p>
+    </div>
+    <div class="modal-card">
+      <div class="icon">🎥</div>
+      <h4>Long-Form Video</h4>
+      <p>Minutes-long performances scored for competency, at volume.</p>
+    </div>
+    <div class="modal-card">
+      <div class="icon">🎙️</div>
+      <h4>Voice &amp; Prosody</h4>
+      <p>Prosody, vocal bursts, and expression — meaning in how it's said, not just the words.</p>
+    </div>
+    <div class="modal-card">
+      <div class="icon">⌚</div>
+      <h4>Wearable Data</h4>
+      <p>Movement, form, and vitals from connected devices and sensors.</p>
+    </div>
+  </div>
+
+  <div class="principle-strip">
+    <div class="principle">
+      <h4>The expert in the room</h4>
+      <p>Every evaluation carries the standard of a domain expert — on every submission, at any volume.</p>
+    </div>
+    <div class="principle">
+      <h4>Faculty keep the judgment</h4>
+      <p>We surface evidence, scores, and transcripts. Faculty retain sole authority over grades and integrity.</p>
+    </div>
+    <div class="principle">
+      <h4>Built to your standards</h4>
+      <p>Your rubrics and accreditation instruments, so results map to what you're held to.</p>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>The Platform · 03</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 5 — PROVEN AT PRODUCTION SCALE (CALIBRATION / TRUST)
+============================================================ -->
+<div class="slide-wrap" id="s4" data-name="Proven at Scale">
+<section class="section">
+  <p class="eyebrow">Proven at scale</p>
+  <h2>Production scale. Not a pilot.</h2>
+  <p class="lede">Hardened on live, graded coursework across multiple cohorts.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h4>Volume</h4>
+      <div class="stat-row"><div class="stat-num">65,000</div><div class="stat-lbl">images and videos assessed</div></div>
+      <div class="stat-row"><div class="stat-num">10,000</div><div class="stat-lbl">graded assignments</div></div>
+      <div class="stat-row"><div class="stat-num">2,500+</div><div class="stat-lbl">students across cohorts</div></div>
+      <p class="stat-insight">Across multiple live cohorts.</p>
+    </div>
+    <div class="stat-card">
+      <h4>Speed to deploy</h4>
+      <div class="stat-row"><div class="stat-num">Weeks</div><div class="stat-lbl">to build and fine-tune an evaluation framework — not months</div></div>
+      <div class="stat-row"><div class="stat-num">Months</div><div class="stat-lbl">to implement — not years</div></div>
+      <div class="stat-row"><div class="stat-num">Headless</div><div class="stat-lbl">designed to embed in the environment you already use</div></div>
+      <p class="stat-insight">Built to drop into your stack.</p>
+    </div>
+    <div class="stat-card">
+      <h4>Calibration &amp; oversight</h4>
+      <div class="stat-row"><div class="stat-num">82%</div><div class="stat-lbl">within 10 points of faculty</div></div>
+      <div class="stat-row"><div class="stat-num">2.9 pts</div><div class="stat-lbl">avg gap — in the student's favor</div></div>
+      <div class="stat-row"><div class="stat-num">100%</div><div class="stat-lbl">human review preserved</div></div>
+      <p class="stat-insight">Calibrated to the expert standard.</p>
+    </div>
+  </div>
+
+  <div class="calibration-note">
+    <strong>How to read this:</strong> these figures come from the first domain we hardened the platform in. The architecture is domain-agnostic — the same capture, scoring, and human-in-the-loop oversight extend to nursing, veterinary, allied-health, and trades.
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Proven at Scale · 04</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 6 — THE RESULTS (GENERALIZED OUTCOMES)
+============================================================ -->
+<div class="slide-wrap" id="s5" data-name="The Results">
+<section class="section">
+  <p class="eyebrow">The Results</p>
+  <h2>It changes the economics of teaching.</h2>
+  <p class="lede">Across full-program deployments: less time grading, fewer failures, and faculty hours redirected to mentorship.</p>
+
+  <div class="results-grid">
+    <div class="result"><div class="result-num">85%</div><div class="result-lbl">less faculty grading time</div><div class="result-sub">5–10 min → 60–90 sec</div></div>
+    <div class="result"><div class="result-num">~80%</div><div class="result-lbl">grades accepted as-is</div><div class="result-sub">across all graded images</div></div>
+    <div class="result"><div class="result-num">4.6 ★</div><div class="result-lbl">faculty rating of AI feedback</div><div class="result-sub">consistent week over week</div></div>
+    <div class="result"><div class="result-num">40%</div><div class="result-lbl">fewer must-redo assignments</div><div class="result-sub">~150 → ~80 per term</div></div>
+    <div class="result"><div class="result-num">5%</div><div class="result-lbl">lift in student retention</div><div class="result-sub">term over term</div></div>
+    <div class="result"><div class="result-num">500 hrs</div><div class="result-lbl">faculty time saved per term</div><div class="result-sub">redirected to mentorship</div></div>
+  </div>
+
+  <div class="results-quote">
+    <p>"Grading that used to eat five to ten minutes a submission now takes under ninety seconds — and that time goes straight back to students."</p>
+    <div class="attr">— VP of Academic Affairs, partner institution</div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>The Results · 05</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     THE INSIGHT — REACTIVE -> PROACTIVE
+============================================================ -->
+<div class="slide-wrap" id="s6" data-name="The Insight">
+<section class="section">
+  <p class="eyebrow">The Insight</p>
+  <h2>Intervene at struggle. Not after disengagement.</h2>
+  <p class="lede">Failure is a lagging signal. Struggle is the leading one — and the moment when recovery is still easy.</p>
+
+  <div class="friction-flow">
+    <div class="friction-bracket friction-bracket--top">
+      <span class="label">DeweyLearn intervenes here · Recovery is still easy</span>
+    </div>
+    <div class="stages">
+      <div class="stage stage--solid">
+        <div class="num">01</div>
+        <div class="name">Learning</div>
+        <div class="desc">Student is engaged. Understanding is building.</div>
+      </div>
+      <div class="stage stage--solid">
+        <div class="num">02</div>
+        <div class="name">Struggle</div>
+        <div class="desc">Student hits a snag and needs extra support.</div>
+      </div>
+      <div class="stage stage--soft">
+        <div class="num">03</div>
+        <div class="name">Frustration</div>
+        <div class="desc">Motivation begins to wane. Effort drops.</div>
+      </div>
+      <div class="stage stage--gray">
+        <div class="num">04</div>
+        <div class="name">Disengagement</div>
+        <div class="desc">Student withdraws. Catching them now is hard.</div>
+      </div>
+    </div>
+    <div class="friction-bracket friction-bracket--bottom">
+      <span class="label">The old model only catches here</span>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    "Intervening at the point of struggle is the unlock institutions have wanted for years. What was missing was the infrastructure to see it in real time — for every student at once."
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>The Insight · 06</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SIGNALS IN ACTION — MULTI-SIGNAL + STUDENT SUBMISSION VIDEO
+============================================================ -->
+<div class="slide-wrap" id="s7" data-name="Signals in Action">
+<section class="section">
+  <p class="eyebrow">Captured in the wild</p>
+  <h2>We see learning happen — not just what gets submitted.</h2>
+  <p class="lede">Beyond the final artifact, the platform captures the signals around it — retry loops, hesitation, time-on-task, tone. Every observable trace of how a student is learning, while they're still trying.</p>
+
+  <div class="solution-grid">
+    <div>
+      <div class="video-frame">
+        <video controls preload="metadata" playsinline>
+          <source src="Frustrated Student Retry.mp4" type="video/mp4">
+          Your browser does not support embedded video.
+        </video>
+      </div>
+      <div class="video-caption">A real early signal · Student retrying a submission</div>
+      <div class="video-desc">A real student cycling through repeated submission attempts — one of the signals we surface today, and a glimpse of where the platform is headed.</div>
+    </div>
+    <div class="layers">
+      <div class="layer">
+        <div class="layer-num">01</div>
+        <div>
+          <h4>Multi-Signal Capture</h4>
+          <p>Submissions plus the signals around them — retry loops, hesitation, time-on-task, tone, artifact quality. Every observable trace of how a student is learning.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-num">02</div>
+        <div>
+          <h4>Real-Time Mentorship</h4>
+          <p>A voice-enabled expert mentor available 24/7 — voiced by the program's most credible authority and trained on the full curriculum.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-num">03</div>
+        <div>
+          <h4>The Student Struggle Score</h4>
+          <p>Click patterns, retry loops, artifact quality, abandonment — modeled in real time, while the student is still trying. Surfaces struggle before it becomes disengagement.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-num">04</div>
+        <div>
+          <h4>Faculty Command Center</h4>
+          <p>Cohort-level patterns plus student-level signals route faculty to the right student, with the right context, at the right moment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Signals in Action · 07</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     VOICE MENTORSHIP — REAL AUDIO EXCERPT
+============================================================ -->
+<div class="slide-wrap" id="s8" data-name="Voice Mentorship">
+<section class="section">
+  <p class="eyebrow">Also captured in the wild</p>
+  <h2>An expert mentor, on demand — in the institution's own voice.</h2>
+  <p class="lede">Voiced by the program's most credible authority. Trained on the full curriculum. Available the moment a student needs help.</p>
+
+  <div class="auguste-grid">
+    <div>
+      <div class="mini-kpis">
+        <div class="mini-kpi"><div class="mini-kpi-num">150+</div><div class="mini-kpi-lbl">voice conversations<br>initiated by students</div></div>
+        <div class="mini-kpi"><div class="mini-kpi-num">24/7</div><div class="mini-kpi-lbl">on-demand expert<br>guidance</div></div>
+        <div class="mini-kpi"><div class="mini-kpi-num">2:34</div><div class="mini-kpi-lbl">avg call length —<br>deep, real questions</div></div>
+      </div>
+      <div class="auguste-prose">
+        <p>Students don't hear a generic synthesized coach. <span class="strong">They hear the institution's most credible authority — and the voice is two-way.</span></p>
+        <p class="quotes">Real questions, answered the moment they form — technique, reasoning, "why isn't this working?" — in the voice students already trust.</p>
+      </div>
+    </div>
+    <div>
+      <div class="audio-card">
+        <div class="audio-inner">
+          <div class="audio-title">Voice Mentor</div>
+          <div class="audio-sub">AI Voice Mentor · Live Excerpt</div>
+          <div class="waveform" id="waveform"></div>
+          <audio controls preload="metadata">
+            <source src="Audio Example of Auguste.mov" type="video/quicktime">
+            <source src="Audio Example of Auguste.mov" type="audio/mp3">
+            Your browser does not support audio.
+          </audio>
+        </div>
+      </div>
+      <div class="audio-caption">Live conversation excerpt · 1:43</div>
+      <div class="audio-desc">A real student exchange — technique guidance from the program's lead instructor, on demand.</div>
+    </div>
+  </div>
+
+  <div class="auguste-quote">
+    "The goal isn't to replicate the physical classroom. It's to enhance it — to extend it."   — Program leadership
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Voice Mentorship · 08</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     FACULTY COMMAND CENTER
+============================================================ -->
+<div class="slide-wrap" id="s9" data-name="Faculty Command Center">
+<section class="section">
+  <p class="eyebrow">The Command Center</p>
+  <h2>A Faculty Command Center.</h2>
+  <p class="lede">Real-time signals so faculty can act on insight, not instinct. The AI watches the patterns it's good at — engagement, skills, sentiment — and arms the instructor to make the call.</p>
+
+  <div class="command-frame">
+    <div class="command-header">
+      <div class="command-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <h3>Faculty Command Center</h3>
+        <p>The full teaching dashboard — data, signals, and tools that turn insight into action.</p>
+      </div>
+    </div>
+
+    <div class="cmd-grid">
+      <!-- Real-Time Grading -->
+      <div class="cmd-card">
+        <div class="icon">📊</div>
+        <h4>Real-Time Grading</h4>
+        <p class="cmd-card-desc">AI pre-scores alongside faculty. Quick comparison workflow.</p>
+        <div class="cmd-card-stat">98%</div>
+        <div class="cmd-card-stat-lbl">AI–faculty score alignment</div>
+        <div class="cmd-rows">
+          <div class="cmd-row"><span class="cmd-row-label">Avg. grading time saved</span><span class="cmd-row-value">74%</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Submissions this week</span><span class="cmd-row-value">48</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">AI–Faculty disagreements</span><span class="cmd-row-value">1 of 48</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Flagged for faculty review</span><span class="pill pill--yellow">3 borderline</span></div>
+        </div>
+        <div class="cmd-note">When AI and faculty scores differ by &gt;10%, the submission is auto-flagged for instructor review with a side-by-side rubric comparison.</div>
+      </div>
+
+      <!-- Discussion Monitor -->
+      <div class="cmd-card">
+        <div class="icon">💬</div>
+        <h4>Discussion Monitor</h4>
+        <p class="cmd-card-desc">Sentiment analysis, participation quality, and topic clustering.</p>
+        <div class="cmd-card-stat">156</div>
+        <div class="cmd-card-stat-lbl">Posts this week</div>
+        <div class="cmd-rows">
+          <div class="cmd-row"><span class="cmd-row-label">Positive sentiment</span><span class="pill pill--green">72%</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Top topic cluster</span><span class="cmd-row-value">This week's core concept</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Low-participation students</span><span class="pill pill--yellow">4</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Peer-tagged "Helpful" posts</span><span class="cmd-row-value">23</span></div>
+        </div>
+        <div class="cmd-note">4 students haven't posted since Tuesday. Auto-drafted gentle nudge: "The discussion thread is active — your classmates would value your take!"</div>
+      </div>
+
+      <!-- Student Risk & Intervention -->
+      <div class="cmd-card">
+        <div class="icon">⚠️</div>
+        <h4>Student Risk &amp; Intervention</h4>
+        <p class="cmd-card-desc">Multi-signal detection: clicks, chat frustration, video analysis, errors.</p>
+        <div class="cmd-card-stat cmd-card-stat--warn">3</div>
+        <div class="cmd-card-stat-lbl">Flagged for outreach</div>
+        <div class="cmd-rows no-border">
+          <div class="stud-row">
+            <span class="stud-avatar">🧑‍🎓</span>
+            <div>
+              <div class="stud-name">Alex M.</div>
+              <div class="stud-detail">Missed submission + frustrated chat with the AI</div>
+            </div>
+            <span class="pill pill--red">High risk</span>
+          </div>
+          <div class="stud-row">
+            <span class="stud-avatar">🧑‍🎓</span>
+            <div>
+              <div class="stud-name">David L.</div>
+              <div class="stud-detail">Replayed the procedure demo 6×, click pattern shows confusion</div>
+            </div>
+            <span class="pill pill--yellow">Watch</span>
+          </div>
+          <div class="stud-row">
+            <span class="stud-avatar">🧑‍🎓</span>
+            <div>
+              <div class="stud-name">Sam R.</div>
+              <div class="stud-detail">Last login 4 days ago, no recent progress</div>
+            </div>
+            <span class="pill pill--yellow">Watch</span>
+          </div>
+        </div>
+        <div class="cmd-note">Signals include: chat sentiment, click patterns, video replay frequency, submission gaps, and login recency. Refreshes every 15 minutes.</div>
+      </div>
+
+      <!-- Teaching Insights -->
+      <div class="cmd-card">
+        <div class="icon">💡</div>
+        <h4>Teaching Insights</h4>
+        <p class="cmd-card-desc">Data that helps you teach better — what lands, where students engage, what to do more of.</p>
+        <div class="cmd-card-stat">+23%</div>
+        <div class="cmd-card-stat-lbl">Worked-example impact on scores</div>
+        <div class="cmd-rows">
+          <div class="cmd-row"><span class="cmd-row-label">Your worked example (Lesson 2)</span><span class="pill pill--green">+23% on the quiz</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Core technique demo (Lesson 4)</span><span class="pill pill--green">Replayed 3.2× avg</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Intro lecture (Lesson 1)</span><span class="pill pill--yellow">42% skipped ahead</span></div>
+          <div class="cmd-row"><span class="cmd-row-label">Suggested action</span><span class="cmd-row-value">Record more worked examples</span></div>
+        </div>
+        <div class="cmd-note">Students who watched your worked example before attempting the assignment scored 23% higher. Consider recording more — they're your teaching superpower.</div>
+      </div>
+
+      <!-- Direct Outreach -->
+      <div class="cmd-card">
+        <div class="icon">✉️</div>
+        <h4>Direct Outreach</h4>
+        <p class="cmd-card-desc">One-click message with context — "here's what they're struggling with."</p>
+        <div class="cmd-card-stat">5</div>
+        <div class="cmd-card-stat-lbl">Messages sent today</div>
+        <div class="cmd-rows no-border">
+          <div class="channel-prompt">Choose outreach channel for Alex M.:</div>
+          <div class="channel channel--selected">
+            <span class="channel-icon">💬</span>
+            <div>
+              <div class="channel-name">In-App Message</div>
+              <div class="channel-desc">Appears in Alex's DeweyLearn inbox with full context</div>
+            </div>
+          </div>
+          <div class="channel">
+            <span class="channel-icon">📧</span>
+            <div>
+              <div class="channel-name">Email</div>
+              <div class="channel-desc">Sends from your instructor email with course context</div>
+            </div>
+          </div>
+          <div class="channel">
+            <span class="channel-icon">📱</span>
+            <div>
+              <div class="channel-name">SMS / Text</div>
+              <div class="channel-desc">Short nudge sent via student's preferred number</div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-note">"Hi Alex — I noticed you struggled with this week's material, and that's totally normal. Let me help. I have office hours Thursday at 2pm, or reply here and we'll figure it out together." — Prof. Lee</div>
+      </div>
+    </div>
+
+    <!-- Predictive Risk Scoring — Live View -->
+    <div class="risk-live">
+      <h4>Predictive Risk Scoring — Live View</h4>
+      <div class="risk-bar">
+        <div style="width: 68%; background: var(--green);"></div>
+        <div style="width: 22%; background: var(--yellow);"></div>
+        <div style="width: 10%; background: var(--red);"></div>
+      </div>
+      <div class="risk-legend">
+        <span class="risk-legend-item"><span class="risk-dot" style="background: var(--green);"></span>On Track (68%)</span>
+        <span class="risk-legend-item"><span class="risk-dot" style="background: var(--yellow);"></span>Watch (22%)</span>
+        <span class="risk-legend-item"><span class="risk-dot" style="background: var(--red);"></span>Intervene (10%)</span>
+      </div>
+      <div class="risk-students">
+        <div class="risk-stud risk-stud--green">
+          <span style="font-size: 1.4rem;">🧑‍🎓</span>
+          <div>
+            <div class="risk-stud-name">Maria S.</div>
+            <div class="risk-stud-detail">High engagement, strong submissions</div>
+          </div>
+          <div class="risk-stud-score">92</div>
+        </div>
+        <div class="risk-stud risk-stud--yellow">
+          <span style="font-size: 1.4rem;">🧑‍🎓</span>
+          <div>
+            <div class="risk-stud-name">David L.</div>
+            <div class="risk-stud-detail">Click patterns show frustration in Lesson 3</div>
+          </div>
+          <div class="risk-stud-score">61</div>
+        </div>
+        <div class="risk-stud risk-stud--red">
+          <span style="font-size: 1.4rem;">🧑‍🎓</span>
+          <div>
+            <div class="risk-stud-name">Alex M.</div>
+            <div class="risk-stud-detail">Missed submission, frustrated chat with the AI</div>
+          </div>
+          <div class="risk-stud-score">34</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="command-footnote">The instructor is the coach. The AI is the clipboard.</p>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Faculty Command Center · 09</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 7 — USE CASE: AI INTERVIEW / INTEGRITY
+============================================================ -->
+<div class="slide-wrap" id="s10" data-name="AI Interview · Integrity">
+<section class="section">
+  <span class="domain-chip"><span class="dot"></span>Use Case · Academic Integrity · High School &amp; Career Programs</span>
+  <h2>Verifying authentic understanding — at the point of submission.</h2>
+  <p class="lede">For a large accredited online school serving high-school completion, career-diploma, and associate programs, DeweyLearn confirms work is the student's own — and that they understand it.</p>
+
+  <div class="uc-grid">
+    <div class="uc-prose">
+      <p>A student submits a written assignment. DeweyLearn scores it against the rubric, then <span class="strong">DeweyBot</span> — our conversational agent — runs a short, structured AI interview.</p>
+      <p>It probes three things: <span class="accent-text">authenticity</span> (is this their own work), <span class="accent-text">narrative congruency</span> (do spoken explanations match the writing), and <span class="accent-text">depth of understanding</span> (can they explain the concepts).</p>
+      <p>The rubric score and full transcript go back to faculty, who retain sole responsibility for grading and integrity decisions.</p>
+    </div>
+    <div class="uc-panel uc-panel--dark">
+      <h4>DeweyBot interview · excerpt</h4>
+      <div class="transcript">
+        <div class="t-msg t-bot"><div class="who">DeweyBot</div><div class="bubble">You chose a recursive approach. Walk me through why recursion fit this problem.</div></div>
+        <div class="t-msg t-student"><div class="who">Student</div><div class="bubble">It repeats the same sub-task on smaller inputs, so each call handles one layer and passes the rest down to the base case.</div></div>
+        <div class="t-msg t-bot"><div class="who">DeweyBot</div><div class="bubble">What happens if you remove the base case?</div></div>
+        <div class="t-msg t-student"><div class="who">Student</div><div class="bubble">It recurses forever and overflows the stack.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gov-note">
+    <strong>Privacy &amp; governance by design.</strong> Most learners are adults; some are minors. The interview is short, structured, and faculty-supervised. Transcripts and scores go only to faculty, who make every call — and no student work, transcript, or interaction record persists after delivery.
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Use Case · 10</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 8 — USE CASE: VETERINARY SITE PLACEMENTS
+============================================================ -->
+<div class="slide-wrap" id="s11" data-name="Site Assessment · Video">
+<section class="section">
+  <span class="domain-chip"><span class="dot"></span>Use Case · Veterinary Technology · Accreditation</span>
+  <h2>Assessing clinical placement sites by video — at accreditation fidelity.</h2>
+  <p class="lede">Programs must verify externship and clinical-placement sites meet accreditation standards. Site visits are slow and capacity-limited, so coverage stays thin and inconsistent.</p>
+
+  <div class="uc-grid">
+    <div class="uc-prose">
+      <p>DeweyLearn assesses sites from video against the accreditation rubric the program is held to. <span class="strong">More sites get reviewed in less time</span> — and with higher, more consistent fidelity than visit-by-visit review can sustain.</p>
+      <p>Every site is scored against the same criteria, so programs can show accreditors coverage and consistency with evidence attached — not anecdote.</p>
+      <p class="accent-text">The expert eye, applied to every site, at the same standard, every time.</p>
+    </div>
+    <div class="uc-panel">
+      <h4>How it works</h4>
+      <div class="uc-steps">
+        <div class="uc-step"><div class="uc-step-num">1</div><div><h5>Capture</h5><p>Site walkthrough and procedures recorded on video.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">2</div><div><h5>Evaluate</h5><p>Scored against the accreditation rubric, criterion by criterion.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">3</div><div><h5>Standardize</h5><p>Identical scoring removes reviewer-to-reviewer drift.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">4</div><div><h5>Review</h5><p>Faculty and accreditation leads sign off, evidence attached.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="uc-stats">
+    <div class="uc-stat"><div class="uc-stat-num">More sites</div><div class="uc-stat-lbl">assessed per cycle than visits allow</div></div>
+    <div class="uc-stat"><div class="uc-stat-num">Less time</div><div class="uc-stat-lbl">to evaluate each site end-to-end</div></div>
+    <div class="uc-stat"><div class="uc-stat-num">Higher fidelity</div><div class="uc-stat-lbl">consistent alignment to standards</div></div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Use Case · 11</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 9 — USE CASE: VIRTUAL CAPSTONES
+============================================================ -->
+<div class="slide-wrap" id="s12" data-name="Virtual Capstones">
+<section class="section">
+  <span class="domain-chip"><span class="dot"></span>Use Case · Competency-Based Capstones</span>
+  <h2>Capstones where real competencies are demonstrated — and assessed at volume.</h2>
+  <p class="lede">Virtual capstones evaluate actual competencies across a series of long-form practice videos — thousands of videos, each minutes long.</p>
+
+  <div class="uc-grid">
+    <div class="uc-prose">
+      <p>Instead of one timed exam, a capstone becomes a body of demonstrated work: the learner performs the skill, on video, over time. DeweyLearn scores each performance against the competency framework and assembles a defensible judgment of readiness.</p>
+      <p><span class="strong">The range is deliberately broad</span> — PT and athletic-training sessions, full five-course meals, veterinary skills in real settings. Different domains, one assessment engine.</p>
+      <p class="accent-text">Capstones that measure what a graduate can actually do — at the scale of a whole program.</p>
+    </div>
+    <div class="uc-panel">
+      <h4>Long-form performances we assess</h4>
+      <div class="uc-steps">
+        <div class="uc-step"><div class="uc-step-num">🏋️</div><div><h5>PT &amp; athletic training</h5><p>Full coaching sessions, scored for cueing and progression.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">🍽️</div><div><h5>Five-course meals</h5><p>Technique and consistency judged across a full service.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">🐾</div><div><h5>Veterinary skills</h5><p>Procedures performed in real clinical settings.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="uc-stats">
+    <div class="uc-stat"><div class="uc-stat-num">Thousands</div><div class="uc-stat-lbl">of videos assessed per program</div></div>
+    <div class="uc-stat"><div class="uc-stat-num">Minutes each</div><div class="uc-stat-lbl">long-form, not snippets</div></div>
+    <div class="uc-stat"><div class="uc-stat-num">Competency-aligned</div><div class="uc-stat-lbl">scored to your readiness framework</div></div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Use Case · 12</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 10 — USE CASE: STANDARDIZED SIMULATIONS (CREIGHTON)
+============================================================ -->
+<div class="slide-wrap" id="s13" data-name="Clinical Simulation">
+<section class="section">
+  <span class="domain-chip"><span class="dot"></span>Use Case · Nursing · Clinical Simulation</span>
+  <h2>Standardizing standardized simulations.</h2>
+  <p class="lede">Validated instruments like the Creighton Competency Evaluation Instrument (C-CEI) standardize how nursing simulations are scored — but running and scoring them by hand is heavy on instructor time and load.</p>
+
+  <div class="uc-grid">
+    <div class="uc-prose">
+      <p>DeweyLearn observes the simulation and scores it against the instrument the program already uses. That cuts the time and cognitive load of running and grading sims — instructors run more, score faster, stay consistent.</p>
+      <p>Students get <span class="strong">iterative, referenced feedback</span> — tied to specific moments and aligned to a clinical-readiness framework, not generic commentary.</p>
+      <p class="accent-text">The instrument standardizes judgment. We make that standardization achievable at scale.</p>
+    </div>
+    <div class="uc-panel">
+      <h4>How it works</h4>
+      <div class="uc-steps">
+        <div class="uc-step"><div class="uc-step-num">1</div><div><h5>Observe</h5><p>The simulation is captured — no extra staging needed.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">2</div><div><h5>Score to the instrument</h5><p>Consistent C-CEI application across every student.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">3</div><div><h5>Referenced feedback</h5><p>Tied to specific moments, aligned to clinical readiness.</p></div></div>
+        <div class="uc-step"><div class="uc-step-num">4</div><div><h5>Iterate</h5><p>Students re-attempt; faculty confirm the call.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="uc-stats">
+    <div class="uc-stat"><div class="uc-stat-num">Less time</div><div class="uc-stat-lbl">running and scoring sims</div></div>
+    <div class="uc-stat"><div class="uc-stat-num">Lower load</div><div class="uc-stat-lbl">cognitive burden on instructors</div></div>
+    <div class="uc-stat"><div class="uc-stat-num">Framework-aligned</div><div class="uc-stat-lbl">feedback built for readiness</div></div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Use Case · 13</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 11 — THE THROUGHLINE
+============================================================ -->
+<div class="slide-wrap" id="s14" data-name="The Throughline">
+<section class="section">
+  <p class="eyebrow">The throughline</p>
+  <h2>One infrastructure. Every place learning has to be observed.</h2>
+  <p class="lede">Integrity interviews, site assessment, capstones, and clinical sims look like four problems. They run on one engine: multi-modal capture, rubric-aligned scoring, an expert standard, and faculty holding final judgment.</p>
+
+  <div class="domain-grid">
+    <div class="domain-tile"><div class="tile-icon">🍳</div><h4>Culinary Arts</h4><p>Plating, technique, and full-service performance.</p></div>
+    <div class="domain-tile"><div class="tile-icon">🩺</div><h4>Nursing &amp; Clinical</h4><p>Simulations scored to validated instruments.</p></div>
+    <div class="domain-tile"><div class="tile-icon">🐾</div><h4>Veterinary Technology</h4><p>Clinical skills and accreditation-grade site review.</p></div>
+    <div class="domain-tile"><div class="tile-icon">🏋️</div><h4>PT &amp; Athletic Training</h4><p>Long-form coaching and training capstones.</p></div>
+    <div class="domain-tile"><div class="tile-icon">🔧</div><h4>Skilled Trades</h4><p>Hands-on procedures scored to competency.</p></div>
+    <div class="domain-tile"><div class="tile-icon">🎓</div><h4>High School &amp; Career</h4><p>Authenticity verified at submission.</p></div>
+  </div>
+
+  <div class="principle-strip">
+    <div class="principle"><h4>Faculty keep judgment</h4><p>Evidence and scores in; final decisions stay with faculty.</p></div>
+    <div class="principle"><h4>Privacy-first</h4><p>Configurable retention, up to no persistence after delivery.</p></div>
+    <div class="principle"><h4>Accreditation-aligned</h4><p>Your rubrics and instruments, applied consistently.</p></div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>The Throughline · 14</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
+     SLIDE 12 — CLOSE / PARTNER
+============================================================ -->
+<div class="slide-wrap dark" id="s15" data-name="Partner With Us">
+<section class="section section--dark">
+  <p class="eyebrow">Partner with us</p>
+  <h2>Make the doing of learning your competitive edge.</h2>
+  <p class="lede">If your programs are held to standards that live in performance — clinical, technical, creative, hands-on — we can assess it at the scale of your whole population, without giving up the expert standard or faculty control.</p>
+
+  <div class="cta-box">
+    <h3>Let's find your first program.</h3>
+    <p>We start where the assessment burden is highest and the stakes are clearest — a capstone, a simulation sequence, a site-assessment cycle, or an integrity workflow — then scale across the institution.</p>
+    <div class="cta-contact">
+      <div>
+        <div class="label">Get in touch</div>
+        <div class="value">joshua@deweylearn.ai</div>
+      </div>
+      <div>
+        <div class="label">Where we go next</div>
+        <div class="value">The classroom, the clinic, the field, and the studio.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>Partner With Us · 15</span>
+  </div>
+</section>
+</div>
+
+
+
+<!-- ============================================================
+     SLIDESHOW NAVIGATION
+============================================================ -->
+<nav class="nav-bar" aria-label="Slide navigation">
+  <button class="nav-btn" id="prevBtn" aria-label="Previous slide" title="Previous (← / ↑)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <span class="nav-section-name" id="navName">Cover</span>
+  <span class="nav-counter"><span id="navIdx">1</span><span class="total"> / 15</span></span>
+  <button class="nav-btn nav-btn--text" id="nextBtn" aria-label="Next slide" title="Next (→ / ↓ / Space)">
+    Next
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</nav>
+
+<script>
+  // Generate the waveform bars
+  (function() {
+    const wf = document.getElementById('waveform');
+    if (!wf) return;
+    const heights = [22, 38, 28, 52, 36, 60, 44, 30, 48, 42, 56, 32, 46, 36, 52, 28, 42, 50, 34, 24, 40, 30, 46, 36, 52, 30, 44, 32, 50, 28, 38, 46, 26, 42, 30, 48, 36, 30, 44, 28, 36, 22];
+    heights.forEach(h => {
+      const b = document.createElement('div');
+      b.className = 'bar';
+      b.style.height = h + 'px';
+      wf.appendChild(b);
+    });
+  })();
+
+  // Slideshow navigation
+  (function() {
+    const slides = Array.from(document.querySelectorAll('.slide-wrap'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const navIdx = document.getElementById('navIdx');
+    const navName = document.getElementById('navName');
+    const progress = document.getElementById('navProgress');
+    const total = slides.length;
+
+    let current = 0;
+
+    function updateUI(idx) {
+      current = idx;
+      navIdx.textContent = (idx + 1).toString().padStart(2, '0');
+      navName.textContent = slides[idx].dataset.name || '';
+      progress.style.width = ((idx + 1) / total * 100) + '%';
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === total - 1;
+    }
+
+    function goTo(idx) {
+      idx = Math.max(0, Math.min(total - 1, idx));
+      slides[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updateUI(idx);
+    }
+
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      // Ignore if typing in an input or focused on a media element
+      const tag = (document.activeElement && document.activeElement.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'video' || tag === 'audio') return;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        goTo(current + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        goTo(current - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goTo(total - 1);
+      }
+    });
+
+    // Track current slide via IntersectionObserver (handles user scroll)
+    const io = new IntersectionObserver((entries) => {
+      // Pick the entry with the largest intersection ratio
+      let best = null;
+      for (const e of entries) {
+        if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
+          best = e;
+        }
+      }
+      if (best) {
+        const idx = slides.indexOf(best.target);
+        if (idx !== -1 && idx !== current) updateUI(idx);
+      }
+    }, { threshold: [0.5, 0.75] });
+
+    slides.forEach(s => io.observe(s));
+
+    updateUI(0);
+  })();
+</script>
+
+</body>
+</html>

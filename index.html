@@ -248,7 +248,7 @@
   /* ===== Validation stats ===== */
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
     margin-top: 3rem;
   }
@@ -1763,7 +1763,7 @@
 <section class="section">
   <p class="eyebrow">The Platform</p>
   <h2>Multi-modal, multi-sensory evaluation at scale.</h2>
-  <p class="lede">Text, images, long-form video, voice, and wearable data, captured and scored against your rubric. The expert in the room; faculty keep the judgment.</p>
+  <p class="lede">Text, images, long-form video, voice, and wearable data, captured and scored against your rubric. AI expertise, human judgment.</p>
 
   <div class="modal-band">
     <div class="modal-card">
@@ -1837,20 +1837,13 @@
       <h4>Speed to deploy</h4>
       <div class="stat-row"><div class="stat-num">Weeks</div><div class="stat-lbl">to build and fine-tune an evaluation framework, not months</div></div>
       <div class="stat-row"><div class="stat-num">Months</div><div class="stat-lbl">to implement, not years</div></div>
-      <div class="stat-row"><div class="stat-num">Headless</div><div class="stat-lbl">designed to embed in the environment you already use</div></div>
-      <p class="stat-insight">Built to drop into your stack.</p>
-    </div>
-    <div class="stat-card">
-      <h4>Calibration &amp; oversight</h4>
-      <div class="stat-row"><div class="stat-num">82%</div><div class="stat-lbl">within 10 points of faculty</div></div>
-      <div class="stat-row"><div class="stat-num">2.9 pts</div><div class="stat-lbl">avg gap, in the student's favor</div></div>
-      <div class="stat-row"><div class="stat-num">100%</div><div class="stat-lbl">human review preserved</div></div>
-      <p class="stat-insight">Calibrated to the expert standard.</p>
+      <div class="stat-row"><div class="stat-num">Headless</div><div class="stat-lbl">designed to integrate seamlessly with your LMS</div></div>
+      <p class="stat-insight">Built to drop into your current technology stack.</p>
     </div>
   </div>
 
   <div class="calibration-note">
-    <strong>How to read this:</strong> these figures come from the first domain we hardened the platform in. The architecture is domain-agnostic. The same capture, scoring, and human-in-the-loop oversight extend to nursing, veterinary, allied-health, and trades.
+    <strong>How to read this:</strong> these figures come from DeweyLearn's first deployment in culinary and hospitality education. The architecture is domain-agnostic. The same capture, scoring, and human-in-the-loop oversight extend to nursing, veterinary, allied-health, and trades.
   </div>
 
   <div class="footer-strip">
@@ -1873,7 +1866,7 @@
   <div class="results-grid">
     <div class="result"><div class="result-num">85%</div><div class="result-lbl">less faculty grading time</div><div class="result-sub">5–10 min → 60–90 sec</div></div>
     <div class="result"><div class="result-num">~80%</div><div class="result-lbl">grades accepted as-is</div><div class="result-sub">across all graded images</div></div>
-    <div class="result"><div class="result-num">4.6 ★</div><div class="result-lbl">faculty rating of AI feedback</div><div class="result-sub">consistent week over week</div></div>
+    <div class="result"><div class="result-num">4.6 ★</div><div class="result-lbl">Out of 5 faculty rating of AI feedback</div><div class="result-sub">consistent week over week</div></div>
     <div class="result"><div class="result-num">40%</div><div class="result-lbl">fewer must-redo assignments</div><div class="result-sub">~150 → ~80 per term</div></div>
     <div class="result"><div class="result-num">5%</div><div class="result-lbl">lift in student retention</div><div class="result-sub">term over term</div></div>
     <div class="result"><div class="result-num">500 hrs</div><div class="result-lbl">faculty time saved per term</div><div class="result-sub">redirected to mentorship</div></div>
@@ -1928,12 +1921,13 @@
       </div>
     </div>
     <div class="friction-bracket friction-bracket--bottom">
-      <span class="label">The old model only catches here</span>
+      <span class="label">The old model only identifies students here</span>
     </div>
   </div>
 
   <div class="pull-quote">
-    "Intervening at the point of struggle is the unlock institutions have wanted for years. What was missing was the infrastructure to see it in real time, for every student at once."
+    <p style="margin: 0;">"Intervening at the point of struggle is the unlock institutions have wanted for years. What was missing was the infrastructure to see it in real time, for every student at once."</p>
+    <div class="attr">Kathleen Ahern, VP Academic Affairs, Triumph Higher Education</div>
   </div>
 
   <div class="footer-strip">
@@ -2009,9 +2003,9 @@
 ============================================================ -->
 <div class="slide-wrap" id="s8" data-name="Voice Mentorship">
 <section class="section">
-  <p class="eyebrow">Also captured in the wild</p>
+  <p class="eyebrow">Captured in the wild</p>
   <h2>An expert mentor, on demand, in the institution's own voice.</h2>
-  <p class="lede">Voiced by the program's most credible authority. Trained on the full curriculum. Available the moment a student needs help.</p>
+  <p class="lede">Voiced by the program's most credible authorities.</p>
 
   <div class="auguste-grid">
     <div>
@@ -2021,8 +2015,11 @@
         <div class="mini-kpi"><div class="mini-kpi-num">2:34</div><div class="mini-kpi-lbl">avg call length:<br>deep, real questions</div></div>
       </div>
       <div class="auguste-prose">
-        <p>Students don't hear a generic synthesized coach. <span class="strong">They hear the institution's most credible authority, and the voice is two-way.</span></p>
-        <p class="quotes">Real questions, answered the moment they form. Technique, reasoning, "why isn't this working?", in the voice students already trust.</p>
+        <p>Students don't hear a generic synthesized coach. <span class="strong">They converse with a voice trained by their instructors, and the voice is two-way.</span></p>
+        <ul style="margin: 1rem 0 0 0; padding-left: 1.25rem; color: var(--charcoal); line-height: 1.6; font-size: 1.05rem;">
+          <li style="margin-bottom: 0.5rem;">Real-time, in-the-flow student help</li>
+          <li>Back-end insights about student success and struggle</li>
+        </ul>
       </div>
     </div>
     <div>
@@ -2044,7 +2041,8 @@
   </div>
 
   <div class="auguste-quote">
-    "The goal isn't to replicate the physical classroom. It's to enhance it. It's to extend it."   Program leadership
+    <p style="margin: 0;">"The goal isn't to replicate the physical classroom. It's to enhance it. It's to extend it."</p>
+    <div style="margin-top: 1rem; font-family: 'Inter', sans-serif; font-style: normal; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.7);">Kirk T. Bachmann, President / Provost, Triumph Higher Education</div>
   </div>
 
   <div class="footer-strip">
@@ -2413,7 +2411,7 @@
 <div class="slide-wrap" id="s14" data-name="The Throughline">
 <section class="section">
   <p class="eyebrow">The throughline</p>
-  <h2>One infrastructure. Every place learning has to be observed.</h2>
+  <h2>A single learning infrastructure. Everywhere learning is observed.</h2>
   <p class="lede">Integrity interviews, site assessment, capstones, and clinical sims look like four problems. They run on one engine: multi-modal capture, rubric-aligned scoring, an expert standard, and faculty holding final judgment.</p>
 
   <div class="domain-grid">

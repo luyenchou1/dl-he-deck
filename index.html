@@ -1653,6 +1653,48 @@
   .principle h4 { margin: 0 0 0.5rem 0; color: var(--indigo); font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
   .principle p { margin: 0; color: var(--charcoal); font-size: 0.92rem; line-height: 1.5; }
 
+  /* Modular Frameworks (Platform deep dive) */
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.75rem;
+  }
+  .framework-card {
+    background: var(--indigo-tint);
+    border-radius: 14px;
+    padding: 1.75rem 1.6rem;
+    border-left: 3px solid var(--indigo);
+  }
+  .framework-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 0.6rem;
+  }
+  .framework-card h4 {
+    margin: 0 0 0.55rem 0;
+    color: var(--indigo);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .framework-card h4 em {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .framework-card p {
+    margin: 0;
+    color: var(--charcoal);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
   /* Throughline domain grid */
   .domain-grid {
     display: grid;
@@ -1690,7 +1732,7 @@
     .uc-stats, .modal-band, .principle-strip, .domain-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 640px) {
-    .uc-stats, .modal-band, .principle-strip, .domain-grid { grid-template-columns: 1fr; }
+    .uc-stats, .modal-band, .principle-strip, .domain-grid, .framework-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -1816,6 +1858,46 @@
 
 
 <!-- ============================================================
+     SLIDE 3B — DEEP DIVE: MODULAR FRAMEWORKS
+============================================================ -->
+<div class="slide-wrap" id="s3b" data-name="Modular Frameworks">
+<section class="section">
+  <p class="eyebrow">The Platform</p>
+  <h2>Modular Frameworks.</h2>
+  <p class="lede">Reliable, verifiable analyses based on your institution's and expert's specific knowledge and frameworks.</p>
+
+  <div class="framework-grid">
+    <div class="framework-card">
+      <div class="framework-num">01</div>
+      <h4><em>Modular,</em> single-concern</h4>
+      <p>Each framework targets one well-defined construct, composable with others into any rubric.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">02</div>
+      <h4>Knowledge in a <em>versionable</em> graph</h4>
+      <p>Reviewable, versionable, and auditable as institutional standards evolve.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">03</div>
+      <h4><em>Parallel,</em> specialized pipelines</h4>
+      <p>Hands, gaze, voice, text, room. Each modality runs in a pipeline tuned to its signal.</p>
+    </div>
+    <div class="framework-card">
+      <div class="framework-num">04</div>
+      <h4>Customer-led, <em>agent</em>-built</h4>
+      <p>Faculty describe constructs in plain language; an agent stack scaffolds the framework for expert calibration.</p>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
+    <span>The Platform · 04</span>
+  </div>
+</section>
+</div>
+
+
+<!-- ============================================================
      SLIDE 5 — PROVEN AT PRODUCTION SCALE (CALIBRATION / TRUST)
 ============================================================ -->
 <div class="slide-wrap" id="s4" data-name="Proven at Scale">
@@ -1847,7 +1929,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Proven at Scale · 04</span>
+    <span>Proven at Scale · 05</span>
   </div>
 </section>
 </div>
@@ -1878,7 +1960,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>The Results · 05</span>
+    <span>The Results · 06</span>
   </div>
 </section>
 </div>
@@ -1931,7 +2013,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>The Insight · 06</span>
+    <span>The Insight · 07</span>
   </div>
 </section>
 </div>
@@ -1991,7 +2073,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Signals in Action · 07</span>
+    <span>Signals in Action · 08</span>
   </div>
 </section>
 </div>
@@ -2046,7 +2128,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Voice Mentorship · 08</span>
+    <span>Voice Mentorship · 09</span>
   </div>
 </section>
 </div>
@@ -2241,7 +2323,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Faculty Command Center · 09</span>
+    <span>Faculty Command Center · 10</span>
   </div>
 </section>
 </div>
@@ -2279,7 +2361,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Use Case · 10</span>
+    <span>Use Case · 11</span>
   </div>
 </section>
 </div>
@@ -2319,7 +2401,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Use Case · 11</span>
+    <span>Use Case · 12</span>
   </div>
 </section>
 </div>
@@ -2358,7 +2440,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Use Case · 12</span>
+    <span>Use Case · 13</span>
   </div>
 </section>
 </div>
@@ -2398,7 +2480,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Use Case · 13</span>
+    <span>Use Case · 14</span>
   </div>
 </section>
 </div>
@@ -2430,7 +2512,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>The Throughline · 14</span>
+    <span>The Throughline · 15</span>
   </div>
 </section>
 </div>
@@ -2462,7 +2544,7 @@
 
   <div class="footer-strip">
     <span>DeweyLearn · Multi-Modal Assessment Infrastructure</span>
-    <span>Partner With Us · 15</span>
+    <span>Partner With Us · 16</span>
   </div>
 </section>
 </div>
